@@ -1,0 +1,113 @@
+ #include<bits/stdc++.h>
+ using namespace std;
+
+class Node
+{
+    public:
+    int data;
+    Node* next;
+
+    Node(int data)
+    {
+        this -> data = data;
+        this -> next = NULL;
+    }    
+
+    ~Node()
+    {
+        int val = this -> data;
+        if(this -> next != NULL)
+        {
+            delete next;
+            next = NULL;
+        }
+    }
+};
+
+void insert(Node* &tail, int ele, int data)
+{
+    if(tail == NULL)
+    {
+        Node* temp1 = new Node(data);
+        tail = temp1;
+        temp1 -> next = temp1;
+    }
+    else
+    {
+        Node* curr = tail;
+        while(curr -> data != ele)
+        {
+            curr = curr -> next;
+        } 
+        Node* temp2 = new Node(data);
+        temp2 -> next = curr -> next;
+        curr -> next = temp2; 
+    }
+}
+
+void deletion(Node* tail, int data)
+{
+    if(tail == NULL)
+    {
+        cout << "List is empty" << endl;
+    }
+    else
+    {
+        Node* prev = tail;
+        Node* curr = prev -> next;
+        while(curr -> data != data)
+        {
+            prev = curr;
+            curr = curr -> next;
+        }
+        prev -> next = curr -> next;
+        if(curr == prev)
+        {
+            tail = NULL;
+        }
+        if(tail == curr)
+        {
+            tail = prev;
+        }
+        curr -> next = NULL;
+        delete curr;
+    }
+}
+
+void print(Node* &tail)
+{
+    Node* temp = tail;
+    do
+    {
+        cout << tail -> data << " ";
+        tail = tail -> next;
+    }while(tail != temp);
+   cout << endl;
+}
+
+ int main()
+ {
+     Node* tail = NULL;
+
+     insert(tail, 5, 3);
+     print(tail);
+
+     insert(tail, 3, 5);
+     print(tail);
+
+     insert(tail, 5, 7);
+     print(tail);
+
+     insert(tail, 7, 9);
+     print(tail);
+
+     insert(tail, 5, 6);
+     print(tail);
+
+    cout << tail -> data <<endl;
+
+     deletion(tail, 3);
+     print(tail);
+
+     return 0;
+ }
